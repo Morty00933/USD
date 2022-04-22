@@ -15,7 +15,7 @@ func main() {
 	}
 	defer resp.Body.Close()
 	scanner := bufio.NewScanner(resp.Body)
-	for i := 20; scanner.Scan() && i < 50; i++ {
+	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
 	if err := scanner.Err(); err != nil {
