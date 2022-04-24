@@ -1,21 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
 func main() {
-	req, err := http.Get("https://example.com/")
+	resp, err := http.Get("https://jsonplaceholder.typicode.com/posts")
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
-	defer req.Body.Close()
-	b, err := ioutil.ReadAll(req.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
-	fmt.Printf("%s\n", b)
-
+	sb := string(body)
+	log.Printf(sb)
 }
