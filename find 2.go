@@ -6,10 +6,11 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"strconv"
 )
 
 func main() {
-	resp, err := http.Get("https://cbr.ru/key-indicators/")
+	resp, err := http.Get("https://www.sberometer.ru/?c&&&&")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -18,13 +19,15 @@ func main() {
 		log.Fatalln(err)
 	}
 	sb := string(body)
-	//	log.Printf(sb)
-	//	sb2 := "This domain is for use in illustrative examples in documents. You may use this\n    domain in literature without prior coordination or asking for permission."
-	//	if strings.Contains(sb, "12344532") {
-	//		fmt.Println(sb2)
-	//	}
-	//	matched, _ := regexp.MatchString(`[1-9]+[0-9]+\,+[0-9]{4}`, sb)
-	//	fmt.Println(matched)
-	re := regexp.MustCompile(`[1-9]+[0-9]+\,+[0-9]{4}`)
-	fmt.Printf("%q\n", re.FindString(sb)) // "food"
+	re := regexp.MustCompile(`[1-9]+[0-9]+\.+[0-9]{4}`)
+	fmt.Printf("%q\n", re.FindString(sb))
+	RU, err := strconv.ParseFloat(re.FindString(sb), 32)
+	var EUR float64
+	var ru int = int(RU)
+	eur, err := fmt.Scanln(EUR)
+	if err != nil {
+		return
+	}
+	sum := ru * eur
+	fmt.Println(sum)
 }
